@@ -16,30 +16,24 @@
  * under the License.
  */
 
-import ControllerCallReturn from "../controllerReturn/controllerCallReturn";
-import ControllerDecodeReturn from "../controllerReturn/controllerDecodeReturn";
+import { commonControllerDecode } from "@pet-management-webapp/shared/data-access/data-access-common-api-util";
+import { User } from "@pet-management-webapp/shared/data-access/data-access-common-models-util";
+import { Session } from "next-auth";
+import { controllerCallGetMe } from "./controllerCallGetMe";
 
-export type Name = {
-    givenName: string,
-    familyName: string
+/**
+ * 
+ * @param session - session objet
+ * @param userUri - uri of the role
+ * 
+ * @returns - details of the user
+ */
+export async function controllerDecodeGetMe(session: Session): Promise<User | null> {
+
+    const res = (await commonControllerDecode(() => controllerCallGetMe(session), null) as User | null);
+
+    return res;
+
 }
 
-export interface User extends ControllerCallReturn, ControllerDecodeReturn {
-    id: string | undefined,
-    name: Name,
-    emails: string[] | undefined,
-    userName: string | undefined,
-    roles: Role[] | undefined,
-    [key: string]: unknown
-}
-
-interface Role {
-    audienceValue: string,
-    display: string,
-    audienceType: string,
-    value: string,
-    "$ref": string,
-    audienceDisplay: string
-}
-
-export default User;
+export default controllerDecodeGetMe;

@@ -21,6 +21,7 @@
 export * from "./lib/controller/user/controllerViewUser/controllerDecodeViewUsers";
 export * from "./lib/controller/user/controllerAddUser/controllerDecodeAddUser";
 export * from "./lib/controller/user/controllerEditUser/controllerDecodeEditUser";
+export * from "./lib/controller/user/controllerGetUser/controllerDecodeGetMe";
 export * from "./lib/controller/application/controllerListAllApplications/controllerDecodeListAllApplications";
 export * from "./lib/controller/application/controllerListCurrentApplication/controllerDecodeListCurrentApplication";
 export * from "./lib/controller/application/controllerGetApplication/controllerDecodeGetApplication";

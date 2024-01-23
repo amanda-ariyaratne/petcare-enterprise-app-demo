@@ -35,6 +35,7 @@ declare module "next-auth" {
         orgName?: string,
         orginalIdToken?: string,
         group?: string,
+        isConsoleAdmin?: boolean
     }
 }
 

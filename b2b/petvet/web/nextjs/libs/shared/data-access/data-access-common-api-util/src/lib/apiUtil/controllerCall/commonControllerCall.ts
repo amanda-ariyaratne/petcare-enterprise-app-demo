@@ -49,7 +49,6 @@ export async function commonControllerCall(api: string, session: Session | null,
                 throw Error;
             }
         } else {
-
             header = getControllerCallApiRequestOptions(session, param);
         }
         

@@ -24,15 +24,17 @@ import { postDoctor } from "apps/business-admin-app/APICalls/CreateDoctor/post-d
 import { getDoctor } from "apps/business-admin-app/APICalls/getDoctors/get-doctor";
 import { getPersonalization } from "apps/business-admin-app/APICalls/GetPersonalization/get-personalization";
 import { postPersonalization } from "apps/business-admin-app/APICalls/UpdatePersonalization/post-personalization";
-import personalize from "apps/business-admin-app/components/sections/sections/settingsSection/personalizationSection/personalize";
 import { DoctorInfo } from "apps/business-admin-app/types/doctor";
 import { Personalization } from "apps/business-admin-app/types/personalization";
 import controllerDecodeGetBrandingPreference 
-    from "libs/business-admin-app/data-access/data-access-controller/src/lib/controller/branding/controllerDecodeGetBrandingPreference";
+from "libs/business-admin-app/data-access/data-access-controller/src/lib/controller/branding/controllerDecodeGetBrandingPreference";
+import controllerDecodeGetMe 
+from "libs/business-admin-app/data-access/data-access-controller/src/lib/controller/user/controllerGetUser/controllerDecodeGetMe";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
 import { useEffect } from "react";
 import Home from "../../components/sections/home";
+import personalize from "apps/business-admin-app/components/sections/sections/settingsSection/personalizationSection/personalize";
 
 export async function getServerSideProps(context) {
 
@@ -122,6 +124,16 @@ export default function Org(props : OrgProps) {
     
                     postPersonalization(session.accessToken, newPersonalization);
                 }
+            });
+
+        controllerDecodeGetMe(session)
+            .then((response) => {
+                const hasAdministratorRole = response.roles.some(role => role.display === "Administrator");
+                
+                if (hasAdministratorRole && !session.group.includes("Administrator")) {
+                    session.group = session.group + " " + "Administrator";
+                }
+                console.log(session.group);
             });
     }, [ session ]);
 

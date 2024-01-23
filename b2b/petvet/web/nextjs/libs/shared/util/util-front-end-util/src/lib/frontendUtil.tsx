@@ -97,6 +97,34 @@ export function hideBasedOnScopes(scopes: string, sideNavType: string, sideNavIt
     }
 }
 
+export function hideBasedOnRoles(roles: string)
+    : Record<string, string> {
+    
+    const rolesList: string[] = roles.split(/\s+/);
+
+    if (rolesList.includes("Administrator")) {
+
+        return LOADING_DISPLAY_NONE;
+    } else {
+
+        return LOADING_DISPLAY_BLOCK;
+    }
+}
+
+export function showBasedOnRoles(roles: string)
+    : Record<string, string> {
+
+    const rolesList: string[] = roles.split(/\s+/);
+
+    if (rolesList.includes("Administrator")) {
+
+        return LOADING_DISPLAY_BLOCK;
+    } else {
+
+        return LOADING_DISPLAY_NONE;
+    }
+}
+
 export function getIconFromString(iconString: string | undefined): JSX.Element | undefined {
     switch (iconString) {
         case "DashboardIcon":

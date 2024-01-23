@@ -19,6 +19,8 @@
 import { SideNavList } from "@pet-management-webapp/shared/data-access/data-access-common-models-util";
 
 export interface SidenavComponentProps {
+    orgId: string,
+    role : string,
     scope : string,
     sideNavData : SideNavList,
     activeKeySideNav : string,

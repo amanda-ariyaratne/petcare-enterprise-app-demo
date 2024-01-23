@@ -142,6 +142,9 @@ export default function Home(props: HomeProps): JSX.Element {
             case "13":
 
                 return <ConfigureMFASection  session={ session } />;   
+            case "14":
+
+                return <GetStartedSectionComponent />;   
         }
     };
 
@@ -162,6 +165,8 @@ export default function Home(props: HomeProps): JSX.Element {
     if (session) {
         homeComponent = (
             <HomeComponentForAdmin
+                orgId={ session.orgId }
+                role={ session.group }
                 scope={ session.scope }
                 sideNavData={ sideNavDataForAdmin }
                 activeKeySideNav={ activeKeySideNav }

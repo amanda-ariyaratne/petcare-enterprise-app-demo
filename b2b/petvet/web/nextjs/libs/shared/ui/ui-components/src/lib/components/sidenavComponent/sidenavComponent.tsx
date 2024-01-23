@@ -16,19 +16,81 @@
  * under the License.
  */
 
+import { getConfig } from "@pet-management-webapp/business-admin-app/util/util-application-config-util";
 import { SideNavItem, SideNavList } from "@pet-management-webapp/shared/data-access/data-access-common-models-util";
-import { getIconFromString, hideBasedOnScopes } from "@pet-management-webapp/shared/util/util-front-end-util";
+import { 
+    getIconFromString, 
+    hideBasedOnRoles, 
+    hideBasedOnScopes, 
+    showBasedOnRoles
+} from "@pet-management-webapp/shared/util/util-front-end-util";
 import { Button, Nav, Sidenav, Stack, Tag } from "rsuite";
 import "rsuite/dist/rsuite.min.css";
 import styles from "./sidenavComponent.module.css";
 import { SidenavComponentProps } from "../../models/sidenavComponent/sidenavComponent";
 
 export function SidenavComponent(prop: SidenavComponentProps) {
-    const { scope, sideNavData, activeKeySideNav, activeKeySideNavSelect, setSignOutModalOpen, logoComponent } = prop;
+    const { 
+        orgId,
+        role, 
+        scope, 
+        sideNavData, 
+        activeKeySideNav, 
+        activeKeySideNavSelect, 
+        setSignOutModalOpen, 
+        logoComponent 
+    } = prop;
 
     const signOutOnClick = () => setSignOutModalOpen(true);
 
     const sideNavConfigList: SideNavList = sideNavData;
+
+    const getStyleBasedOnScopeAndRoles = (
+        role: string, 
+        scopes: string, 
+        item: SideNavItem
+    ): Record<string, string> => {
+
+        switch (item.type) {
+            case "menu":
+                if (item.showBasedOnRole) {
+                    return showBasedOnRoles(role);
+                }
+                if (item.hideBasedOnRole) {
+                    return hideBasedOnRoles(role);
+                }
+                if (item.hideBasedOnScope) {
+                    return hideBasedOnScopes(scope, item.type, item.items);
+                }
+                
+                return {};
+            
+            case "item":
+                if (item.showBasedOnRole) {
+                    return showBasedOnRoles(role);
+                }
+                if (item.hideBasedOnRole) {
+                    return hideBasedOnRoles(role);
+                }
+                if (item.hideBasedOnScope) {
+                    return hideBasedOnScopes(scope, item.type, item.items, item.scopes);
+                }
+
+                return {};
+            default:
+                break;
+        }
+        
+        return {};
+    };
+
+    const getExternalLink = (target: string): string => {
+        if (target === "console") {
+            return `${getConfig().CommonConfig.AuthorizationConfig.BaseOrganizationUrl}/o/${orgId}/console`;
+        }
+
+        return "";
+    };
 
     return (
         <div className={ styles["sideNavDiv"] }>
@@ -49,9 +111,7 @@ export function SidenavComponent(prop: SidenavComponentProps) {
                                             eventKey={ item.eventKey }
                                             title={ item.title }
                                             icon={ getIconFromString(item.icon) }
-                                            style={ item.hideBasedOnScope
-                                                ? hideBasedOnScopes(scope, item.type, item.items)
-                                                : {} }
+                                            style={ getStyleBasedOnScopeAndRoles(role, scope, item) }
                                             key={ item.eventKey }>
                                             {
                                                 item.items.map((item) =>
@@ -60,10 +120,7 @@ export function SidenavComponent(prop: SidenavComponentProps) {
                                                         eventKey={ item.eventKey }
                                                         onSelect={ (eventKey) =>
                                                             activeKeySideNavSelect(eventKey) }
-                                                        style={ item.hideBasedOnScope
-                                                            ? hideBasedOnScopes(scope, item.type, 
-                                                                item.items, item.scopes)
-                                                            : {} }>
+                                                        style={ getStyleBasedOnScopeAndRoles(role, scope, item) }>
                                                         <Stack spacing={ 10 }>
                                                             { item.title }
                                                             { item.new
@@ -81,10 +138,15 @@ export function SidenavComponent(prop: SidenavComponentProps) {
                                             key={ item.eventKey }
                                             eventKey={ item.eventKey }
                                             icon={ getIconFromString(item.icon) }
-                                            onSelect={ (eventKey) => activeKeySideNavSelect(eventKey) }
-                                            style={ item.hideBasedOnScope
-                                                ? hideBasedOnScopes(scope, item.type, item.items, item.scopes)
-                                                : {} }
+                                            onSelect={ (eventKey) => {
+                                                activeKeySideNavSelect(eventKey);
+                                                if (item.externalLink) {
+                                                    const externalLink = getExternalLink(item.externalLink);
+                                                    
+                                                    window.open(externalLink, "_blank")?.focus();
+                                                }
+                                            } }
+                                            style={ getStyleBasedOnScopeAndRoles(role, scope, item) }
                                         >
                                             <Stack spacing={ 10 }>
                                                 { item.title }

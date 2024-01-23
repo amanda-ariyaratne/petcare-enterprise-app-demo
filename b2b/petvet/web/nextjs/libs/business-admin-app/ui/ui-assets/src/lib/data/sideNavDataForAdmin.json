@@ -63,6 +63,7 @@
             "icon": "AdminIcon",
             "type": "item",
             "hideBasedOnScope": true,
+            "hideBasedOnRole": true,
             "scopes": [
                 "internal_org_user_mgt_view",
                 "internal_org_user_mgt_list",
@@ -77,6 +78,7 @@
             "icon": "ManageDoctorIcon",
             "type": "item",
             "hideBasedOnScope": true,
+            "hideBasedOnRole": true,
             "scopes": [
                 "internal_org_role_mgt_view",
                 "internal_org_role_mgt_update"
@@ -88,6 +90,7 @@
             "icon": "ManageGroups",
             "type": "item",
             "hideBasedOnScope": true,
+            "hideBasedOnRole": true,
             "scopes": [
                 "internal_org_group_mgt_view",
                 "internal_org_group_mgt_list",
@@ -102,6 +105,7 @@
             "icon": "BrandingIcon",
             "type": "item",
             "hideBasedOnScope": true,
+            "hideBasedOnRole": true,
             "scopes": [
                 "internal_org_branding_preference_update"
             ]
@@ -112,6 +116,7 @@
             "icon": "GearCircleIcon",
             "type": "menu",
             "hideBasedOnScope": true,
+            "hideBasedOnRole": true,
             "items": [
                 {
                     "title": "SSO",
@@ -203,6 +208,14 @@
             "scopes": [
                 "create_pet"
             ]
+        },
+        {
+            "title": "Admin Settings",
+            "eventKey": "14",
+            "icon": "GearCircleIcon",
+            "type": "item",
+            "showBasedOnRole": true,
+            "externalLink": "console"
         }
     ]
 }

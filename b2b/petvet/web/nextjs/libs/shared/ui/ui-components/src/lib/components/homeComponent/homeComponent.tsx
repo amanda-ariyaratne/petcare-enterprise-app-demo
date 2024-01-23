@@ -23,13 +23,25 @@ import SidenavComponent from "../sidenavComponent/sidenavComponent";
 
 export function HomeComponent(prop: HomeComponentProps) {
 
-    const { scope, sideNavData, activeKeySideNav, activeKeySideNavSelect, setSignOutModalOpen, children, logoComponent }
+    const { 
+        orgId,
+        role, 
+        scope, 
+        sideNavData, 
+        activeKeySideNav, 
+        activeKeySideNavSelect, 
+        setSignOutModalOpen, 
+        children, 
+        logoComponent 
+    }
         = prop;
 
     return (
         <div className={ styles["mainDiv"] }>
 
             <SidenavComponent
+                orgId={ orgId }
+                role= { role }
                 scope={ scope }
                 sideNavData={ sideNavData }
                 activeKeySideNav={ activeKeySideNav }

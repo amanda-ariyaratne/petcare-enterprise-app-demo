@@ -16,30 +16,24 @@
  * under the License.
  */
 
-import ControllerCallReturn from "../controllerReturn/controllerCallReturn";
-import ControllerDecodeReturn from "../controllerReturn/controllerDecodeReturn";
+import { commonControllerCall } from "@pet-management-webapp/shared/data-access/data-access-common-api-util";
+import { User } from "@pet-management-webapp/shared/data-access/data-access-common-models-util";
+import { Session } from "next-auth";
 
-export type Name = {
-    givenName: string,
-    familyName: string
+/**
+ * call GET `userUri`
+ * 
+ * @param session - session object
+ * @param userUri - uri of the user
+ * 
+ * @returns - user details, if the call failed `null`
+ */
+export async function controllerCallGetMe(session: Session): Promise<User | null> {
+
+    const data = (await commonControllerCall(
+        `/api/settings/user/getMe?orgId=${session.orgId}`, 
+        session
+    ) as User | null);
+
+    return data;
 }
-
-export interface User extends ControllerCallReturn, ControllerDecodeReturn {
-    id: string | undefined,
-    name: Name,
-    emails: string[] | undefined,
-    userName: string | undefined,
-    roles: Role[] | undefined,
-    [key: string]: unknown
-}
-
-interface Role {
-    audienceValue: string,
-    display: string,
-    audienceType: string,
-    value: string,
-    "$ref": string,
-    audienceDisplay: string
-}
-
-export default User;

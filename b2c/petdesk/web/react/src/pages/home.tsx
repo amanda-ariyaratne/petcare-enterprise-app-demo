@@ -90,7 +90,6 @@ export const HomePage: FunctionComponent = (): ReactElement => {
             setUser(basicUserInfo);
             const idToken = await getIDToken();
             const decodedIDToken = await getDecodedIDToken();
-            console.log("decodedIDToken", decodedIDToken);
             
 
             const derivedState: DerivedState = {
