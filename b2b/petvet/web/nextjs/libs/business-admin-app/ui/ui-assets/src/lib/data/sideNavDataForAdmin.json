@@ -179,6 +179,7 @@
                     "eventKey": "7-1",
                     "type": "item",
                     "icon": "ManageUserIcon",
+                    "hideBasedOnScope": true,
                     "scopes": [
                         "create_pet",
                         "list_pets",
@@ -192,6 +193,7 @@
                     "title": "Available Bookings",
                     "eventKey": "7-2",
                     "type": "item",
+                    "hideBasedOnScope": true,
                     "scopes": [
                         "create_pet",
                         "list_bookings"

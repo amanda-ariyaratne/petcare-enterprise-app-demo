@@ -129,7 +129,7 @@ export default function Org(props : OrgProps) {
 
         controllerDecodeGetMe(session)
             .then((response) => {
-                const hasAdministratorRole = response.roles.some(role => role.display === "Administrator");
+                const hasAdministratorRole = response.roles?.some(role => role.display === "Administrator");
                 
                 if (hasAdministratorRole && !session.group.includes("Administrator")) {
                     setRoles(session.group + " Administrator");
