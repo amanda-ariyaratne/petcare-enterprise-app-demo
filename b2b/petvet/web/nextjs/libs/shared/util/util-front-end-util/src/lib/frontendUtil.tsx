@@ -26,13 +26,13 @@ import GearCircleIcon from "@rsuite/icons/legacy/GearCircle";
 import MemberIcon from "@rsuite/icons/Member";
 import PageIcon from "@rsuite/icons/Page";
 import PeopleBranchIcon from "@rsuite/icons/PeopleBranch";
+import PeoplesIcon from "@rsuite/icons/Peoples";
 import PeoplesCostomizeIcon from "@rsuite/icons/PeoplesCostomize";
 import PhoneIcon from "@rsuite/icons/Phone";
 import SettingHorizontalIcon from "@rsuite/icons/SettingHorizontal";
 import ShieldIcon from "@rsuite/icons/Shield";
 import SpeakerIcon from "@rsuite/icons/Speaker";
 import TagLockIcon from "@rsuite/icons/TagLock";
-import PeoplesIcon from '@rsuite/icons/Peoples';
 
 export const LOADING_DISPLAY_NONE = {
     display: "none"
@@ -98,31 +98,25 @@ export function hideBasedOnScopes(scopes: string, sideNavType: string, sideNavIt
 }
 
 export function hideBasedOnRoles(roles: string)
-    : Record<string, string> {
-    
+    : boolean {
     const rolesList: string[] = roles.split(/\s+/);
 
     if (rolesList.includes("Administrator")) {
-
-        return LOADING_DISPLAY_NONE;
-    } else {
-
-        return LOADING_DISPLAY_BLOCK;
+        return true;
     }
+
+    return false;
 }
 
 export function showBasedOnRoles(roles: string)
-    : Record<string, string> {
-
+    : boolean {
     const rolesList: string[] = roles.split(/\s+/);
 
     if (rolesList.includes("Administrator")) {
+        return true;
+    } 
 
-        return LOADING_DISPLAY_BLOCK;
-    } else {
-
-        return LOADING_DISPLAY_NONE;
-    }
+    return false;
 }
 
 export function getIconFromString(iconString: string | undefined): JSX.Element | undefined {

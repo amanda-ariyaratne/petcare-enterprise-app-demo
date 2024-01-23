@@ -19,6 +19,8 @@
 import { getConfig } from "@pet-management-webapp/business-admin-app/util/util-application-config-util";
 import { SideNavItem, SideNavList } from "@pet-management-webapp/shared/data-access/data-access-common-models-util";
 import { 
+    LOADING_DISPLAY_BLOCK,
+    LOADING_DISPLAY_NONE,
     getIconFromString, 
     hideBasedOnRoles, 
     hideBasedOnScopes, 
@@ -53,30 +55,30 @@ export function SidenavComponent(prop: SidenavComponentProps) {
 
         switch (item.type) {
             case "menu":
-                if (item.showBasedOnRole) {
-                    return showBasedOnRoles(role);
+                if (item.showBasedOnRole && showBasedOnRoles(role)) {
+                    return LOADING_DISPLAY_BLOCK;
                 }
-                if (item.hideBasedOnRole) {
-                    return hideBasedOnRoles(role);
+                if (item.hideBasedOnRole && hideBasedOnRoles(role)) {
+                    return LOADING_DISPLAY_NONE;
                 }
                 if (item.hideBasedOnScope) {
                     return hideBasedOnScopes(scope, item.type, item.items);
                 }
                 
-                return {};
+                return LOADING_DISPLAY_NONE;
             
             case "item":
-                if (item.showBasedOnRole) {
-                    return showBasedOnRoles(role);
+                if (item.showBasedOnRole && showBasedOnRoles(role)) {
+                    return LOADING_DISPLAY_BLOCK;
                 }
-                if (item.hideBasedOnRole) {
-                    return hideBasedOnRoles(role);
+                if (item.hideBasedOnRole && hideBasedOnRoles(role)) {
+                    return LOADING_DISPLAY_NONE;
                 }
                 if (item.hideBasedOnScope) {
                     return hideBasedOnScopes(scope, item.type, item.items, item.scopes);
                 }
 
-                return {};
+                return LOADING_DISPLAY_NONE;
             default:
                 break;
         }
