@@ -32,7 +32,7 @@ import controllerDecodeGetMe
 from "libs/business-admin-app/data-access/data-access-controller/src/lib/controller/user/controllerGetUser/controllerDecodeGetMe";
 import { Session } from "next-auth";
 import { getSession } from "next-auth/react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Home from "../../components/sections/home";
 import personalize from "apps/business-admin-app/components/sections/sections/settingsSection/personalizationSection/personalize";
 
@@ -75,6 +75,7 @@ interface OrgProps {
 export default function Org(props : OrgProps) {
 
     const { session, routerQuery } = props;
+    const [ roles, setRoles ] = useState<string>(session?.group);
 
     useEffect(() => {
         if (routerQuery) {
@@ -131,7 +132,7 @@ export default function Org(props : OrgProps) {
                 const hasAdministratorRole = response.roles.some(role => role.display === "Administrator");
                 
                 if (hasAdministratorRole && !session.group.includes("Administrator")) {
-                    session.group = session.group + " " + "Administrator";
+                    setRoles(session.group + " Administrator");
                 }
             });
     }, [ session ]);
@@ -140,7 +141,8 @@ export default function Org(props : OrgProps) {
         session
             ? (<Home
                 name={ session.orgName }
-                session={ session }/>)
+                session={ session }
+                roles={ roles }/>)
             : null
     );
 }

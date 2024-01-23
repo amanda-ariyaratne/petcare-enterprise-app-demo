@@ -49,11 +49,13 @@ import sideNavDataForAdmin
 import HomeComponentForAdmin
     from "../../../../libs/shared/ui/ui-components/src/lib/components/homeComponent/homeComponentForAdmin";
 import Custom500 from "../../pages/500";
+import { controllerDecodeGetMe } from "@pet-management-webapp/business-admin-app/data-access/data-access-controller";
 
 
 interface HomeProps {
     name: string,
-    session: Session
+    session: Session,
+    roles: string
 }
 
 /**
@@ -64,7 +66,7 @@ interface HomeProps {
  */
 export default function Home(props: HomeProps): JSX.Element {
 
-    const { name, session } = props;
+    const { name, session, roles } = props;
 
     const [ activeKeySideNav, setActiveKeySideNav ] = useState("1");
     const [ signOutModalOpen, setSignOutModalOpen ] = useState(false);
@@ -84,9 +86,6 @@ export default function Home(props: HomeProps): JSX.Element {
         //         personalize(response.data);
         //     });
     };
-
-    
-
 
     const mainPanelComponenet = (activeKey): JSX.Element => {
         switch (activeKey) {
@@ -166,7 +165,7 @@ export default function Home(props: HomeProps): JSX.Element {
         homeComponent = (
             <HomeComponentForAdmin
                 orgId={ session.orgId }
-                role={ session.group }
+                role={ roles }
                 scope={ session.scope }
                 sideNavData={ sideNavDataForAdmin }
                 activeKeySideNav={ activeKeySideNav }

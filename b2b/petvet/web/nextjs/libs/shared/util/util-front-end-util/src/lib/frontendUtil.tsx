@@ -104,10 +104,10 @@ export function hideBasedOnRoles(roles: string)
 
     if (rolesList.includes("Administrator")) {
 
-        return LOADING_DISPLAY_BLOCK;
+        return LOADING_DISPLAY_NONE;
     } else {
 
-        return LOADING_DISPLAY_NONE;
+        return LOADING_DISPLAY_BLOCK;
     }
 }
 
@@ -118,10 +118,10 @@ export function showBasedOnRoles(roles: string)
 
     if (rolesList.includes("Administrator")) {
 
-        return LOADING_DISPLAY_NONE;
+        return LOADING_DISPLAY_BLOCK;
     } else {
 
-        return LOADING_DISPLAY_BLOCK;
+        return LOADING_DISPLAY_NONE;
     }
 }
 
