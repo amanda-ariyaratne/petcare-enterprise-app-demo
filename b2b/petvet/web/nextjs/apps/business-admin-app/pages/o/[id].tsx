@@ -133,7 +133,6 @@ export default function Org(props : OrgProps) {
                 if (hasAdministratorRole && !session.group.includes("Administrator")) {
                     session.group = session.group + " " + "Administrator";
                 }
-                console.log(session.group);
             });
     }, [ session ]);
 
